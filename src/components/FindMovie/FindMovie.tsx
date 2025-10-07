@@ -21,7 +21,7 @@ export const FindMovie: FC<Props> = ({ onAddMovie }) => {
   const findMovie = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    getMovie(query)
+    getMovie(query.trim())
       .then(data => {
         if (data.Response === 'False') {
           setErrorMessage(message);
@@ -42,7 +42,7 @@ export const FindMovie: FC<Props> = ({ onAddMovie }) => {
             ? 'https://via.placeholder.com/360x270.png?text=no%20preview'
             : Poster;
 
-        const newMovie = {
+        const newMovie: Movie = {
           title,
           description,
           imgUrl,
@@ -50,6 +50,7 @@ export const FindMovie: FC<Props> = ({ onAddMovie }) => {
           imdbId,
         };
 
+        setErrorMessage('');
         setMovie(newMovie);
       })
       .catch(() => {
@@ -106,7 +107,7 @@ export const FindMovie: FC<Props> = ({ onAddMovie }) => {
               data-cy="searchButton"
               type="submit"
               className={cn('button', 'is-light', { 'is-loading': isLoading })}
-              disabled={!query}
+              disabled={!query.trim()}
             >
               {movie ? 'Search again' : 'Find a movie'}
             </button>
