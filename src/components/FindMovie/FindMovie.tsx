@@ -87,7 +87,7 @@ export const FindMovie: FC<Props> = ({ onAddMovie }) => {
               type="text"
               id="movie-title"
               placeholder="Enter a title to search"
-              className="input is-danger"
+              className="input"
               value={query}
               onChange={handleInputChange}
             />
