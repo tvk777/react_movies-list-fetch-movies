@@ -17,11 +17,17 @@ export const FindMovie: FC<Props> = ({ onAddMovie }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const message = "Can't find a movie with such a title";
+  const trimmedQuery = query.trim();
 
   const findMovie = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    getMovie(query.trim())
+
+    if (!trimmedQuery) {
+      return;
+    }
+
+    getMovie(trimmedQuery)
       .then(data => {
         if (data.Response === 'False') {
           setErrorMessage(message);
@@ -107,7 +113,7 @@ export const FindMovie: FC<Props> = ({ onAddMovie }) => {
               data-cy="searchButton"
               type="submit"
               className={cn('button', 'is-light', { 'is-loading': isLoading })}
-              disabled={!query.trim()}
+              disabled={!trimmedQuery}
             >
               {movie ? 'Search again' : 'Find a movie'}
             </button>
